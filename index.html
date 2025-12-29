@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Consulta Rápida</title>
+  <meta name="theme-color" content="#1e40af">
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --brand: #3b82f6;
+      --b2: #60a5fa;
+      --ring: rgba(59, 130, 246, 0.18);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .rxn4-wrap {
+      max-width: 480px;
+      width: 100%;
+    }
+    .rxn4-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 32px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    .rxn4-badge {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--brand);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+    .rxn4-badge svg {
+      width: 48px;
+      height: 48px;
+    }
+    .rxn4-h1 {
+      margin: 0 0 32px;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .rxn4-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      height: 56px;
+      margin: 0 0 24px;
+      padding: 0 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--brand);
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .rxn4-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+      background: var(--b2);
+    }
+    .rxn4-cta:active {
+      transform: translateY(0);
+    }
+    .rxn4-cta svg {
+      width: 18px;
+      height: 18px;
+    }
+    .rxn4-legal {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .rxn4-legal a {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .rxn4-legal a:hover {
+      color: var(--brand);
+    }
+    .rxn4-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--muted);
+      border-radius: 50%;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+    .sheet {
+      background: var(--card);
+      color: var(--ink);
+      max-width: 600px;
+      max-height: 80vh;
+      overflow: auto;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    .sheet h2 {
+      margin: 0 0 16px;
+      color: var(--brand);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .sheet p {
+      line-height: 1.7;
+      margin: 12px 0;
+      color: var(--muted);
+    }
+    .sheet p strong {
+      color: var(--ink);
+    }
+    .dismiss {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dismiss:hover {
+      transform: scale(1.1);
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+    }
+    .actions {
+      margin-top: 24px;
+      text-align: center;
+    }
+    .btn-close {
+      padding: 12px 32px;
+      border: 0;
+      border-radius: 50px;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+    }
+    .btn-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+      background: var(--b2);
+    }
+    @media (max-width: 520px) {
+      .rxn4-card {
+        padding: 40px 24px;
+      }
+      .rxn4-h1 {
+        font-size: 1.5rem;
+      }
+      .rxn4-cta {
+        font-size: 0.9rem;
+        height: 52px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="rxn4-wrap">
+    <section class="rxn4-card" role="region" aria-label="Consulta Rápida">
+      <div class="rxn4-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3a8 8 0 1 1 17-8Z"></path>
+          <circle cx="9.5" cy="12" r="1.1"></circle>
+          <circle cx="12" cy="12" r="1.1"></circle>
+          <circle cx="14.5" cy="12" r="1.1"></circle>
+        </svg>
+      </div>
+      <h1 class="rxn4-h1">Atendimento Online</h1>
+      <div>
+        <a class="rxn4-cta" href="https://calxaatendimento.site/2" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3a8 8 0 1 1 17-8Z"></path>
+            <circle cx="9.5" cy="12" r="1.1"></circle>
+            <circle cx="12" cy="12" r="1.1"></circle>
+            <circle cx="14.5" cy="12" r="1.1"></circle>
+          </svg>
+          <span>Iniciar Atendimento</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 3h3v3"></path>
+            <path d="M10 14L21 3"></path>
+            <path d="M21 10v11H3V3h11"></path>
+          </svg>
+        </a>
+      </div>
+      <div class="rxn4-legal">
+        <a onclick="openModal('privacidade')">Política de Privacidade</a>
+        <span class="rxn4-dot" aria-hidden="true"></span>
+        <a onclick="openModal('termos')">Termos de Uso</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlay" id="privacidade" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="ttl-priv">
+      <h2 id="ttl-priv">Política de Privacidade</h2>
+      <p>Esta política descreve como coletamos, usamos e protegemos suas informações.</p>
+      <p><strong>1.</strong> Coletamos dados que você informa e dados de navegação para melhorar o serviço.</p>
+      <p><strong>2.</strong> Usamos as informações para operar, proteger e aprimorar nossos recursos.</p>
+      <div class="actions"><button class="btn-close" onclick="closeModal('privacidade')">Fechar</button></div>
+    </div>
+    <button class="dismiss" onclick="closeModal('privacidade')" aria-label="Fechar modal">�</button>
+  </div>
+
+  <div class="overlay" id="termos" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="ttl-termos">
+      <h2 id="ttl-termos">Termos de Uso</h2>
+      <p>Ao utilizar nossos serviços, você concorda com estes termos básicos de uso.</p>
+      <p><strong>1.</strong> Use o serviço apenas para fins lícitos e respeitando terceiros.</p>
+      <p><strong>2.</strong> Não garantimos disponibilidade contínua; não nos responsabilizamos por danos indiretos.</p>
+      <div class="actions"><button class="btn-close" onclick="closeModal('termos')">Fechar</button></div>
+    </div>
+    <button class="dismiss" onclick="closeModal('termos')" aria-label="Fechar modal">�</button>
+  </div>
+
+  <script>
+    function openModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = 'flex';
+      el.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = 'none';
+      el.setAttribute('aria-hidden', 'true');
+    }
+  </script>
+
+
+</body></html>
